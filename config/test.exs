@@ -20,9 +20,6 @@ config :mirror, MirrorWeb.Endpoint,
   secret_key_base: "qIoN9yBkF/RqTcl0GV2rX/lO/dI/AGZF3upIanU6UbGwokzPkPa2wIiDzIz7fClh",
   server: false
 
-# In test we don't send emails.
-config :mirror, Mirror.Mailer, adapter: Swoosh.Adapters.Test
-
 # Print only warnings and errors during test
 config :logger, level: :warn
 

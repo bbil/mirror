@@ -6,8 +6,11 @@ config :mirror, Mirror.Repo,
   password: "postgres",
   database: "mirror_dev",
   hostname: "localhost",
+  port: "6932",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  migration_primary_key: [id: :uuid, type: :binary_id],
+  migration_timestamps: [type: :utc_datetime_usec]
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
