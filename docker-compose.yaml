@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  db:
+    restart: always
+    image: postgres:14-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "6932:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    command: postgres -c 'max_connections=1000'
+volumes:
+  db_data:
