@@ -10,6 +10,9 @@ import Config
 config :mirror,
   ecto_repos: [Mirror.Repo]
 
+config :mirror, MirrorProviders.OpenWeather,
+  api_key: "f4083147a07f2beb2fda87ad8b6eefe1"
+
 # Configures the endpoint
 config :mirror, MirrorWeb.Endpoint,
   url: [host: "localhost"],
@@ -33,6 +36,8 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :tesla, :adapter, Tesla.Adapter.Hackney
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

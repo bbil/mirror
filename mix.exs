@@ -5,12 +5,17 @@ defmodule Mirror.MixProject do
     [
       app: :mirror,
       version: "0.1.0",
+
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
+
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+
+      dialyzer: dialyzer()
     ]
   end
 
@@ -33,21 +38,34 @@ defmodule Mirror.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.0"},
+      # dev stuff
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+
+      # test stuff
+      {:floki, ">= 0.30.0", only: :test},
+
+      # phoenix stuff
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_dashboard, "~> 0.5"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.16.0"},
-      {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.5"},
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
-      {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"},
+      {:phoenix, "~> 1.6.0"},
+      {:plug_cowboy, "~> 2.5"},
       {:gettext, "~> 0.18"},
+      {:hackney, "~> 1.17"},
+
+      # db stuff
+      {:ecto_sql, "~> 3.6"},
+      {:postgrex, ">= 0.0.0"},
+
+      {:tesla, "~> 1.4"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 1.0"}
     ]
   end
 
@@ -64,6 +82,12 @@ defmodule Mirror.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": ["esbuild default --minify", "phx.digest"]
+    ]
+  end
+
+  defp dialyzer do
+    [
+      plt_add_apps: [:mix, :ex_unit, :credo]
     ]
   end
 end

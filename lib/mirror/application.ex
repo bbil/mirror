@@ -8,20 +8,14 @@ defmodule Mirror.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
       Mirror.Repo,
-      # Start the Telemetry supervisor
       MirrorWeb.Telemetry,
-      # Start the PubSub system
       {Phoenix.PubSub, name: Mirror.PubSub},
-      # Start the Endpoint (http/https)
-      MirrorWeb.Endpoint
-      # Start a worker by calling: Mirror.Worker.start_link(arg)
-      # {Mirror.Worker, arg}
+      MirrorWeb.Endpoint,
+
+      Mirror.ProviderSupervisor
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Mirror.Supervisor]
     Supervisor.start_link(children, opts)
   end
