@@ -12,7 +12,6 @@ defmodule Mirror.Application do
       MirrorWeb.Telemetry,
       {Phoenix.PubSub, name: Mirror.PubSub},
       MirrorWeb.Endpoint,
-
       Mirror.ProviderSupervisor
     ]
 
